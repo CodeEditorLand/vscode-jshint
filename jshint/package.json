@@ -1,23 +1,37 @@
 {
-	"name": "jshint",
-	"description": "Integrates JSHint into VS Code. JSHint is a linter for JavaScript",
-	"version": "0.11.0",
-	"author": "Microsoft Corporation",
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-jshint.git"
-	},
-	"bugs": {
-		"url": "https://github.com/Microsoft/vscode-jshint/issues"
-	},
-	"engines": {
-		"vscode": "1.26.0"
-	},
-	"devDependencies": {
-		"@types/vscode": "1.83.1"
-	},
-	"dependencies": {
-		"vscode-languageclient": "9.0.1"
-	}
+  "name": "jshint",
+  "description": "Integrates JSHint into VS Code. JSHint is a linter for JavaScript",
+  "version": "0.0.1",
+  "author": {
+    "name": "Nikola Hristov",
+    "email": "nikola@nikolahristov.tech",
+    "url": "https://nikolahristov.tech"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeEditorLand/CodeEditorLand.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CodeEditorLand/CodeEditorLand/issues"
+  },
+  "engines": {
+    "vscode": "1.26.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "1.83.1",
+    "typescript-esbuild": "0.3.1"
+  },
+  "dependencies": {
+    "vscode-languageclient": "9.0.1"
+  },
+  "homepage": "https://github.com/CodeEditorLand/CodeEditorLand#readme",
+  "type": "module",
+  "private": "false",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepublishOnly": "TypeScriptESBuild Source/**/*.ts"
+  }
 }

@@ -1,28 +1,41 @@
 {
-	"name": "jshint-server",
-	"description": "The server part of the VSCode jshint extension",
-	"version": "0.11.0",
-	"author": "Microsoft Corporation",
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-jshint.git"
-	},
-	"bugs": {
-		"url": "https://github.com/Microsoft/vscode-jshint/issues"
-	},
-	"engines": {
-		"node": "*"
-	},
-	"dependencies": {
-		"lodash": "4.17.21",
-		"minimatch": "9.0.3",
-		"vscode-languageserver": "9.0.1",
-		"parse-gitignore": "2.0.0",
-		"htmlparser2": "9.0.0"
-	},
-	"devDependencies": {
-		"@types/lodash": "4.14.200"
-	},
-	"scripts": {}
+  "name": "jshint-server",
+  "description": "The server part of the VSCode jshint extension",
+  "version": "0.0.1",
+  "author": {
+    "name": "Nikola Hristov",
+    "email": "nikola@nikolahristov.tech",
+    "url": "https://nikolahristov.tech"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeEditorLand/CodeEditorLand.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CodeEditorLand/CodeEditorLand/issues"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {
+    "lodash": "4.17.21",
+    "minimatch": "9.0.3",
+    "vscode-languageserver": "9.0.1",
+    "parse-gitignore": "2.0.0",
+    "htmlparser2": "9.0.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "4.14.200",
+    "typescript-esbuild": "0.3.1"
+  },
+  "scripts": {
+    "prepublishOnly": "TypeScriptESBuild Source/**/*.ts"
+  },
+  "homepage": "https://github.com/CodeEditorLand/CodeEditorLand#readme",
+  "type": "module",
+  "private": "false",
+  "publishConfig": {
+    "access": "public"
+  }
 }
