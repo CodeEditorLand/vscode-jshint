@@ -1,41 +1,51 @@
 {
   "name": "jshint",
-  "description": "Integrates JSHint into VS Code. JSHint is a linter for JavaScript",
   "version": "0.0.1",
+  "private": "false",
+  "description": "Integrates JSHint into VS Code. JSHint is a linter for JavaScript",
+  "categories": [
+    "Linters"
+  ],
+  "homepage": "https://github.com/CodeEditorLand/CodeEditorLand#readme",
+  "bugs": {
+    "url": "https://github.com/CodeEditorLand/CodeEditorLand/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeEditorLand/CodeEditorLand.git"
+  },
+  "license": "MIT",
   "author": {
     "name": "Nikola Hristov",
     "email": "nikola@nikolahristov.tech",
     "url": "https://nikolahristov.tech"
   },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CodeEditorLand/CodeEditorLand.git"
-  },
-  "bugs": {
-    "url": "https://github.com/CodeEditorLand/CodeEditorLand/issues"
-  },
-  "icon": "jshint_icon.png",
-  "galleryBanner": {
-    "color": "#5c2d91",
-    "theme": "dark"
-  },
-  "categories": [
-    "Linters"
-  ],
-  "publisher": "dbaeumer",
-  "engines": {
-    "vscode": "1.26.0"
-  },
-  "activationEvents": [
-    "onLanguage:javascript",
-    "onLanguage:javascriptreact",
-    "onLanguage:html",
-    "onCommand:jshint.resetLibraryExecutions",
-    "onCommand:jshint.showOutputChannel"
-  ],
+  "publisher": "playform",
+  "type": "module",
   "main": "./jshint/out/extension",
+  "scripts": {
+    "compile": "npm run compile:client && npm run compile:server",
+    "compile:client": "tsc -p jshint/tsconfig.json",
+    "compile:server": "tsc -p jshint-server/tsconfig.json",
+    "postinstall": "cd jshint && npm install && cd ../jshint-server && npm install && cd ..",
+    "prepublishOnly": "TypeScriptESBuild Source/**/*.ts",
+    "vscode:prepublish": "npm run compile",
+    "watch:client": "tsc -w -p jshint/tsconfig.json",
+    "watch:server": "tsc -w -p jshint-server/tsconfig.json"
+  },
   "contributes": {
+    "commands": [
+      {
+        "title": "Show output",
+        "category": "JSHint",
+        "command": "jshint.showOutputChannel"
+      },
+      {
+        "title": "Reset Library Execution Decisions",
+        "category": "JSHint",
+        "command": "jshint.resetLibraryExecutions"
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "JSHint configuration",
@@ -518,18 +528,6 @@
         }
       }
     },
-    "commands": [
-      {
-        "title": "Show output",
-        "category": "JSHint",
-        "command": "jshint.showOutputChannel"
-      },
-      {
-        "title": "Reset Library Execution Decisions",
-        "category": "JSHint",
-        "command": "jshint.resetLibraryExecutions"
-      }
-    ],
     "jsonValidation": [
       {
         "fileMatch": "jshint.json",
@@ -541,25 +539,27 @@
       }
     ]
   },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile:client": "tsc -p jshint/tsconfig.json",
-    "compile:server": "tsc -p jshint-server/tsconfig.json",
-    "watch:client": "tsc -w -p jshint/tsconfig.json",
-    "watch:server": "tsc -w -p jshint-server/tsconfig.json",
-    "compile": "npm run compile:client && npm run compile:server",
-    "postinstall": "cd jshint && npm install && cd ../jshint-server && npm install && cd ..",
-    "prepublishOnly": "TypeScriptESBuild Source/**/*.ts"
-  },
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:html",
+    "onCommand:jshint.resetLibraryExecutions",
+    "onCommand:jshint.showOutputChannel"
+  ],
   "devDependencies": {
-    "typescript": "5.2.2",
     "@types/node": "20.8.9",
+    "typescript": "5.2.2",
     "typescript-esbuild": "0.3.1"
   },
-  "homepage": "https://github.com/CodeEditorLand/CodeEditorLand#readme",
-  "type": "module",
-  "private": "false",
+  "engines": {
+    "vscode": "1.26.0"
+  },
   "publishConfig": {
     "access": "public"
+  },
+  "icon": "jshint_icon.png",
+  "galleryBanner": {
+    "color": "#5c2d91",
+    "theme": "dark"
   }
 }

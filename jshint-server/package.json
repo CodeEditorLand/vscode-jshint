@@ -1,40 +1,41 @@
 {
   "name": "jshint-server",
-  "description": "The server part of the VSCode jshint extension",
   "version": "0.0.1",
+  "private": "false",
+  "description": "The server part of the VSCode jshint extension",
+  "homepage": "https://github.com/CodeEditorLand/CodeEditorLand#readme",
+  "bugs": {
+    "url": "https://github.com/CodeEditorLand/CodeEditorLand/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CodeEditorLand/CodeEditorLand.git"
+  },
+  "license": "MIT",
   "author": {
     "name": "Nikola Hristov",
     "email": "nikola@nikolahristov.tech",
     "url": "https://nikolahristov.tech"
   },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CodeEditorLand/CodeEditorLand.git"
-  },
-  "bugs": {
-    "url": "https://github.com/CodeEditorLand/CodeEditorLand/issues"
-  },
-  "engines": {
-    "node": "*"
+  "publisher": "playform",
+  "type": "module",
+  "scripts": {
+    "prepublishOnly": "TypeScriptESBuild Source/**/*.ts"
   },
   "dependencies": {
+    "htmlparser2": "9.0.0",
     "lodash": "4.17.21",
     "minimatch": "9.0.3",
-    "vscode-languageserver": "9.0.1",
     "parse-gitignore": "2.0.0",
-    "htmlparser2": "9.0.0"
+    "vscode-languageserver": "9.0.1"
   },
   "devDependencies": {
     "@types/lodash": "4.14.200",
     "typescript-esbuild": "0.3.1"
   },
-  "scripts": {
-    "prepublishOnly": "TypeScriptESBuild Source/**/*.ts"
+  "engines": {
+    "node": "*"
   },
-  "homepage": "https://github.com/CodeEditorLand/CodeEditorLand#readme",
-  "type": "module",
-  "private": "false",
   "publishConfig": {
     "access": "public"
   }
