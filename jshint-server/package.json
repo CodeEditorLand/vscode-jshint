@@ -16,7 +16,7 @@
 	},
 	"dependencies": {
 		"lodash": "^4.17.21",
-		"minimatch": "^3.0.4",
+		"minimatch": "^3.0.5",
 		"vscode-languageserver": "^5.0.3",
 		"parse-gitignore": "^0.4.0",
 		"htmlparser2": "^3.9.2"
