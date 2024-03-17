@@ -1,8 +1,17 @@
 {
-  "author": "Microsoft Corporation",
+  "name": "jshint-server",
+  "version": "0.11.0",
+  "description": "The server part of the VSCode jshint extension",
   "bugs": {
     "url": "https://github.com/Microsoft/vscode-jshint/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/vscode-jshint.git"
+  },
+  "license": "MIT",
+  "author": "Microsoft Corporation",
+  "scripts": {},
   "dependencies": {
     "htmlparser2": "3.9.2",
     "lodash": "4.17.21",
@@ -10,16 +19,7 @@
     "parse-gitignore": "0.4.0",
     "vscode-languageserver": "5.0.3"
   },
-  "description": "The server part of the VSCode jshint extension",
   "devDependencies": {
     "@types/lodash": "4.14.108"
-  },
-  "license": "MIT",
-  "name": "jshint-server",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Microsoft/vscode-jshint.git"
-  },
-  "scripts": {},
-  "version": "0.11.0"
+  }
 }

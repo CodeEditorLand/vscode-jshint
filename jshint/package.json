@@ -1,20 +1,20 @@
 {
-  "author": "Microsoft Corporation",
+  "name": "jshint",
+  "version": "0.11.0",
+  "description": "Integrates JSHint into VS Code. JSHint is a linter for JavaScript",
   "bugs": {
     "url": "https://github.com/Microsoft/vscode-jshint/issues"
   },
-  "dependencies": {
-    "vscode-languageclient": "5.0.1"
-  },
-  "description": "Integrates JSHint into VS Code. JSHint is a linter for JavaScript",
-  "devDependencies": {
-    "@types/vscode": "1.26.0"
-  },
-  "license": "MIT",
-  "name": "jshint",
   "repository": {
     "type": "git",
     "url": "https://github.com/Microsoft/vscode-jshint.git"
   },
-  "version": "0.11.0"
+  "license": "MIT",
+  "author": "Microsoft Corporation",
+  "dependencies": {
+    "vscode-languageclient": "5.0.1"
+  },
+  "devDependencies": {
+    "@types/vscode": "1.26.0"
+  }
 }
