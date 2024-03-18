@@ -12,12 +12,12 @@
 		"url": "https://github.com/Microsoft/vscode-jshint/issues"
 	},
 	"engines": {
-		"vscode": "^1.26.0"
+		"vscode": "1.26.0"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.26.0"
+		"@types/vscode": "1.26.0"
 	},
 	"dependencies": {
-		"vscode-languageclient": "^5.0.1"
+		"vscode-languageclient": "5.0.1"
 	}
 }
