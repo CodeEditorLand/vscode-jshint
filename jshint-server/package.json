@@ -1,28 +1,38 @@
 {
 	"name": "jshint-server",
+	"version": "0.0.1",
+	"private": false,
 	"description": "The server part of the VSCode jshint extension",
-	"version": "0.11.0",
-	"author": "Microsoft Corporation",
-	"license": "MIT",
+	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
+	"bugs": {
+		"url": "https://github.com/CodeEditorLand/Foundation/issues"
+	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-jshint.git"
+		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
 	},
-	"bugs": {
-		"url": "https://github.com/Microsoft/vscode-jshint/issues"
+	"license": "SEE LICENSE IN LICENSE",
+	"author": {
+		"name": "Playform",
+		"email": "Hello@Playform.Cloud",
+		"url": "https://playform.cloud"
 	},
-	"engines": {
-		"node": "*"
+	"type": "module",
+	"scripts": {
+		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'"
 	},
 	"dependencies": {
+		"htmlparser2": "9.1.0",
 		"lodash": "4.17.21",
 		"minimatch": "9.0.3",
-		"vscode-languageserver": "9.0.1",
 		"parse-gitignore": "2.0.0",
-		"htmlparser2": "9.1.0"
+		"vscode-languageserver": "9.0.1"
 	},
 	"devDependencies": {
-		"@types/lodash": "4.17.0"
+		"@types/lodash": "4.17.0",
+		"typescript-esbuild": "latest"
 	},
-	"scripts": {}
+	"publishConfig": {
+		"access": "public"
+	}
 }
