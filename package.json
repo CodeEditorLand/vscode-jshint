@@ -1,34 +1,11 @@
 {
-	"name": "jshint",
-	"version": "0.0.1",
-	"private": false,
-	"description": "Integrates JSHint into VS Code. JSHint is a linter for JavaScript",
-	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
-	"bugs": {
-		"url": "https://github.com/CodeEditorLand/Foundation/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
-	"author": {
-		"name": "Playform",
-		"email": "Hello@Playform.Cloud",
-		"url": "https://playform.cloud"
-	},
-	"type": "module",
-	"main": "./jshint/out/extension",
-	"scripts": {
-		"compile": "npm run compile:client && npm run compile:server",
-		"compile:client": "tsc -p jshint/tsconfig.json",
-		"compile:server": "tsc -p jshint-server/tsconfig.json",
-		"postinstall": "cd jshint && npm install && cd ../jshint-server && npm install && cd ..",
-		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
-		"vscode:prepublish": "npm run compile",
-		"watch:client": "tsc -w -p jshint/tsconfig.json",
-		"watch:server": "tsc -w -p jshint-server/tsconfig.json"
-	},
+	"activationEvents": [
+		"onLanguage:javascript",
+		"onLanguage:javascriptreact",
+		"onLanguage:html",
+		"onCommand:jshint.resetLibraryExecutions",
+		"onCommand:jshint.showOutputChannel"
+	],
 	"contributes": {
 		"commands": [
 			{
@@ -535,24 +512,28 @@
 			}
 		]
 	},
-	"activationEvents": [
-		"onLanguage:javascript",
-		"onLanguage:javascriptreact",
-		"onLanguage:html",
-		"onCommand:jshint.resetLibraryExecutions",
-		"onCommand:jshint.showOutputChannel"
-	],
+	"description": "Integrates JSHint into VS Code. JSHint is a linter for JavaScript",
 	"devDependencies": {
 		"@types/node": "20.11.30",
 		"typescript": "5.4.2",
 		"typescript-esbuild": "0.4.5"
 	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"icon": "jshint_icon.png",
 	"galleryBanner": {
 		"color": "#5c2d91",
 		"theme": "dark"
-	}
+	},
+	"icon": "jshint_icon.png",
+	"main": "./jshint/out/extension",
+	"name": "jshint",
+	"scripts": {
+		"compile": "npm run compile:client && npm run compile:server",
+		"compile:client": "tsc -p jshint/tsconfig.json",
+		"compile:server": "tsc -p jshint-server/tsconfig.json",
+		"postinstall": "cd jshint && npm install && cd ../jshint-server && npm install && cd ..",
+		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'",
+		"vscode:prepublish": "npm run compile",
+		"watch:client": "tsc -w -p jshint/tsconfig.json",
+		"watch:server": "tsc -w -p jshint-server/tsconfig.json"
+	},
+	"type": "module"
 }

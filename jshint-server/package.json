@@ -1,26 +1,4 @@
 {
-	"name": "jshint-server",
-	"version": "0.0.1",
-	"private": false,
-	"description": "The server part of the VSCode jshint extension",
-	"homepage": "https://github.com/CodeEditorLand/Foundation#readme",
-	"bugs": {
-		"url": "https://github.com/CodeEditorLand/Foundation/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/CodeEditorLand/Foundation.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
-	"author": {
-		"name": "Playform",
-		"email": "Hello@Playform.Cloud",
-		"url": "https://playform.cloud"
-	},
-	"type": "module",
-	"scripts": {
-		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'"
-	},
 	"dependencies": {
 		"htmlparser2": "9.1.0",
 		"lodash": "4.17.21",
@@ -28,11 +6,14 @@
 		"parse-gitignore": "2.0.0",
 		"vscode-languageserver": "9.0.1"
 	},
+	"description": "The server part of the VSCode jshint extension",
 	"devDependencies": {
 		"@types/lodash": "4.17.0",
 		"typescript-esbuild": "0.4.5"
 	},
-	"publishConfig": {
-		"access": "public"
-	}
+	"name": "jshint-server",
+	"scripts": {
+		"prepublishOnly": "TypeScriptESBuild 'Source/**/*.ts'"
+	},
+	"type": "module"
 }
