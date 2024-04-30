@@ -1,28 +1,42 @@
 {
 	"name": "jshint-server",
+	"version": "0.0.1",
+	"private": false,
 	"description": "The server part of the VSCode jshint extension",
-	"version": "0.11.0",
-	"author": "Microsoft Corporation",
-	"license": "MIT",
+	"keywords": [
+		"land"
+	],
+	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/LandJSHint#readme",
+	"bugs": {
+		"url": "HTTPS://GitHub.Com/CodeEditorLand/LandJSHint/issues"
+	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-jshint.git"
+		"url": "git+HTTPS://github.com/CodeEditorLand/LandJSHint.git"
 	},
-	"bugs": {
-		"url": "https://github.com/Microsoft/vscode-jshint/issues"
+	"license": "SEE LICENSE IN LICENSE",
+	"author": {
+		"name": "🌆 — Land —",
+		"email": "Land@PlayForm.Cloud",
+		"url": "HTTPS://Land.PlayForm.Cloud"
 	},
-	"engines": {
-		"node": "*"
+	"type": "module",
+	"scripts": {
+		"Document": "Document 'Source/**/*.ts'",
+		"prepublishOnly": "Build 'Source/**/*.ts'"
 	},
 	"dependencies": {
+		"htmlparser2": "^3.9.2",
 		"lodash": "^4.17.21",
 		"minimatch": "^3.0.4",
-		"vscode-languageserver": "^5.0.3",
-		"parse-gitignore": "^0.4.0",
-		"htmlparser2": "^3.9.2"
+		"parse-gitignore": "^0.4.0"
 	},
 	"devDependencies": {
+		"@playform/build": "0.0.7",
+		"@playform/document": "0.0.6",
 		"@types/lodash": "^4.14.108"
 	},
-	"scripts": {}
+	"publishConfig": {
+		"access": "public"
+	}
 }
