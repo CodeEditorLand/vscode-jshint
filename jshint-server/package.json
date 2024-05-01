@@ -26,15 +26,15 @@
 		"prepublishOnly": "Build 'Source/**/*.ts'"
 	},
 	"dependencies": {
-		"htmlparser2": "^3.9.2",
-		"lodash": "^4.17.21",
-		"minimatch": "^3.0.4",
-		"parse-gitignore": "^0.4.0"
+		"htmlparser2": "9.1.0",
+		"lodash": "4.17.21",
+		"minimatch": "9.0.4",
+		"parse-gitignore": "2.0.0"
 	},
 	"devDependencies": {
 		"@playform/build": "0.0.7",
 		"@playform/document": "0.0.6",
-		"@types/lodash": "^4.14.108"
+		"@types/lodash": "4.17.0"
 	},
 	"publishConfig": {
 		"access": "public"
