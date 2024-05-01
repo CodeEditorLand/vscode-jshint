@@ -1,18 +1,35 @@
 {
-	"activationEvents": [
-		"onLanguage:javascript",
-		"onLanguage:javascriptreact",
-		"onLanguage:html",
-		"onCommand:jshint.resetLibraryExecutions",
-		"onCommand:jshint.showOutputChannel"
+	"name": "jshint",
+	"version": "0.0.1",
+	"private": false,
+	"description": "Integrates JSHint into VS Code. JSHint is a linter for JavaScript",
+	"keywords": [
+		"land"
 	],
-	"author": {
-		"email": "Land@PlayForm.Cloud",
-		"name": "🌆 — Land —",
-		"url": "HTTPS://Land.PlayForm.Cloud"
-	},
+	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/LandJSHint#readme",
 	"bugs": {
 		"url": "HTTPS://GitHub.Com/CodeEditorLand/LandJSHint/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+HTTPS://github.com/CodeEditorLand/LandJSHint.git"
+	},
+	"license": "SEE LICENSE IN LICENSE",
+	"author": {
+		"name": "🌆 — Land —",
+		"email": "Land@PlayForm.Cloud",
+		"url": "HTTPS://Land.PlayForm.Cloud"
+	},
+	"type": "module",
+	"main": "./jshint/out/extension",
+	"scripts": {
+		"Document": "Document 'Source/**/*.ts'",
+		"compile": "npm run compile:client && npm run compile:server",
+		"compile:client": "tsc -p jshint/tsconfig.json",
+		"compile:server": "tsc -p jshint-server/tsconfig.json",
+		"prepublishOnly": "Build 'Source/**/*.ts'",
+		"watch:client": "tsc -w -p jshint/tsconfig.json",
+		"watch:server": "tsc -w -p jshint-server/tsconfig.json"
 	},
 	"contributes": {
 		"commands": [
@@ -520,41 +537,24 @@
 			}
 		]
 	},
-	"description": "Integrates JSHint into VS Code. JSHint is a linter for JavaScript",
+	"activationEvents": [
+		"onLanguage:javascript",
+		"onLanguage:javascriptreact",
+		"onLanguage:html",
+		"onCommand:jshint.resetLibraryExecutions",
+		"onCommand:jshint.showOutputChannel"
+	],
 	"devDependencies": {
 		"@playform/build": "0.0.7",
 		"@playform/document": "0.0.6",
 		"@types/node": "20.12.7"
 	},
-	"galleryBanner": {
-		"color": "#5c2d91",
-		"theme": "dark"
-	},
-	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/LandJSHint#readme",
-	"icon": "jshint_icon.png",
-	"keywords": [
-		"land"
-	],
-	"license": "SEE LICENSE IN LICENSE",
-	"main": "./jshint/out/extension",
-	"name": "jshint",
-	"private": false,
 	"publishConfig": {
 		"access": "public"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+HTTPS://github.com/CodeEditorLand/LandJSHint.git"
-	},
-	"scripts": {
-		"Document": "Document 'Source/**/*.ts'",
-		"compile": "npm run compile:client && npm run compile:server",
-		"compile:client": "tsc -p jshint/tsconfig.json",
-		"compile:server": "tsc -p jshint-server/tsconfig.json",
-		"prepublishOnly": "Build 'Source/**/*.ts'",
-		"watch:client": "tsc -w -p jshint/tsconfig.json",
-		"watch:server": "tsc -w -p jshint-server/tsconfig.json"
-	},
-	"type": "module",
-	"version": "0.0.1"
+	"icon": "jshint_icon.png",
+	"galleryBanner": {
+		"color": "#5c2d91",
+		"theme": "dark"
+	}
 }
