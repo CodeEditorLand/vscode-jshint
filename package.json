@@ -1,11 +1,14 @@
 {
-	"activationEvents": [
-		"onLanguage:javascript",
-		"onLanguage:javascriptreact",
-		"onLanguage:html",
-		"onCommand:jshint.resetLibraryExecutions",
-		"onCommand:jshint.showOutputChannel"
-	],
+	"name": "jshint",
+	"description": "Integrates JSHint into VS Code. JSHint is a linter for JavaScript",
+	"main": "./jshint/out/extension",
+	"scripts": {
+		"compile": "npm run compile:client && npm run compile:server",
+		"compile:client": "tsc -p jshint/tsconfig.json",
+		"compile:server": "tsc -p jshint-server/tsconfig.json",
+		"watch:client": "tsc -w -p jshint/tsconfig.json",
+		"watch:server": "tsc -w -p jshint-server/tsconfig.json"
+	},
 	"contributes": {
 		"commands": [
 			{
@@ -512,22 +515,19 @@
 			}
 		]
 	},
-	"description": "Integrates JSHint into VS Code. JSHint is a linter for JavaScript",
+	"activationEvents": [
+		"onLanguage:javascript",
+		"onLanguage:javascriptreact",
+		"onLanguage:html",
+		"onCommand:jshint.resetLibraryExecutions",
+		"onCommand:jshint.showOutputChannel"
+	],
 	"devDependencies": {
 		"@types/node": "^9.4.0"
 	},
+	"icon": "jshint_icon.png",
 	"galleryBanner": {
 		"color": "#5c2d91",
 		"theme": "dark"
-	},
-	"icon": "jshint_icon.png",
-	"main": "./jshint/out/extension",
-	"name": "jshint",
-	"scripts": {
-		"compile": "npm run compile:client && npm run compile:server",
-		"compile:client": "tsc -p jshint/tsconfig.json",
-		"compile:server": "tsc -p jshint-server/tsconfig.json",
-		"watch:client": "tsc -w -p jshint/tsconfig.json",
-		"watch:server": "tsc -w -p jshint-server/tsconfig.json"
 	}
 }
