@@ -1,13 +1,13 @@
 {
 	"dependencies": {
-		"htmlparser2": "^3.9.2",
-		"lodash": "^4.17.21",
-		"minimatch": "^3.0.4",
-		"parse-gitignore": "^0.4.0"
+		"htmlparser2": "3.9.2",
+		"lodash": "4.17.21",
+		"minimatch": "3.0.4",
+		"parse-gitignore": "0.4.0"
 	},
 	"description": "The server part of the VSCode jshint extension",
 	"devDependencies": {
-		"@types/lodash": "^4.14.108"
+		"@types/lodash": "4.14.108"
 	},
 	"name": "jshint-server",
 	"scripts": {}
