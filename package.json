@@ -523,7 +523,7 @@
 		"onCommand:jshint.showOutputChannel"
 	],
 	"devDependencies": {
-		"@types/node": "22.7.2"
+		"@types/node": "22.7.3"
 	},
 	"icon": "jshint_icon.png",
 	"galleryBanner": {
