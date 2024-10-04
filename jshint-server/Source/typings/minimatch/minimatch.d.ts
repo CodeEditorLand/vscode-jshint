@@ -4,12 +4,18 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 declare module "minimatch" {
-
 	function M(target: string, pattern: string, options?: M.IOptions): boolean;
 
 	namespace M {
-		function match(list: string[], pattern: string, options?: IOptions): string[];
-		function filter(pattern: string, options?: IOptions): (element: string, indexed: number, array: string[]) => boolean;
+		function match(
+			list: string[],
+			pattern: string,
+			options?: IOptions,
+		): string[];
+		function filter(
+			pattern: string,
+			options?: IOptions,
+		): (element: string, indexed: number, array: string[]) => boolean;
 		function makeRe(pattern: string, options?: IOptions): RegExp;
 
 		var Minimatch: IMinimatchStatic;
@@ -45,7 +51,11 @@ declare module "minimatch" {
 
 			makeRe(): RegExp; // regexp or boolean
 			match(fname: string): boolean;
-			matchOne(files: string[], pattern: string[], partial: boolean): boolean;
+			matchOne(
+				files: string[],
+				pattern: string[],
+				partial: boolean,
+			): boolean;
 
 			/** Deprecated. For internal use. */
 			debug(): void;
