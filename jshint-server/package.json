@@ -7,7 +7,7 @@
 	},
 	"description": "The server part of the VSCode jshint extension",
 	"devDependencies": {
-		"@types/lodash": "4.17.12"
+		"@types/lodash": "4.17.13"
 	},
 	"name": "jshint-server",
 	"scripts": {}
