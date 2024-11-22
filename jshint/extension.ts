@@ -34,6 +34,7 @@ export const libraryConfirmationType = new RequestType<
 >("jshint/confirmLibraryUsage");
 
 const JSHINT_LIBRARY_CONFIRMATION_KEY = "jshint/libraryConfirmations";
+
 const JSHINT_ALWAYS_ALLOW_EXECUTION_KEY = "jshint/alwaysAllowExecution";
 
 enum ConfirmationSelection {
@@ -48,7 +49,9 @@ export async function activate(context: ExtensionContext) {
 	let serverModule = context.asAbsolutePath(
 		path.join("jshint-server", "out", "server.js"),
 	);
+
 	let debugOptions = { execArgv: ["--nolazy", "--inspect=6004"] };
+
 	let serverOptions: ServerOptions = {
 		run: { module: serverModule, transport: TransportKind.ipc },
 		debug: {
@@ -57,6 +60,7 @@ export async function activate(context: ExtensionContext) {
 			options: debugOptions,
 		},
 	};
+
 	let clientOptions: LanguageClientOptions = {
 		// Only lint files on disk, which are those with 'file' scheme
 		documentSelector: [
@@ -82,6 +86,7 @@ export async function activate(context: ExtensionContext) {
 		},
 		initializationOptions: () => {
 			const configuration = workspace.getConfiguration("jshint");
+
 			return {
 				nodePath: configuration && configuration.nodePath,
 				packageManager: configuration && configuration.packageManager,
@@ -106,6 +111,7 @@ export async function activate(context: ExtensionContext) {
 				items,
 				{ placeHolder: "Clear library confirmations" },
 			);
+
 			if (selected === undefined) {
 				return;
 			}
@@ -145,10 +151,12 @@ export async function activate(context: ExtensionContext) {
 	const libraryConfirmations = context.globalState.get<{
 		[key: string]: boolean;
 	}>(JSHINT_LIBRARY_CONFIRMATION_KEY, {});
+
 	let alwaysAllowExecution = context.globalState.get(
 		JSHINT_ALWAYS_ALLOW_EXECUTION_KEY,
 		false,
 	);
+
 	let sessionPath: string | undefined;
 
 	await client.onReady();
@@ -158,20 +166,26 @@ export async function activate(context: ExtensionContext) {
 		}
 
 		sessionPath = params.path;
+
 		const existingConfirmation = libraryConfirmations[params.path];
+
 		if (existingConfirmation !== undefined) {
 			return existingConfirmation;
 		}
 
 		const libraryUri = Uri.file(params.path);
+
 		const folder = workspace.getWorkspaceFolder(libraryUri);
+
 		let message: string;
 
 		if (folder !== undefined) {
 			let relativePath = libraryUri
 				.toString()
 				.substr(folder.uri.toString().length + 1);
+
 			const mainPath = "/src/jshint.js";
+
 			if (relativePath.endsWith(mainPath)) {
 				relativePath = relativePath.substr(
 					0,
@@ -205,6 +219,7 @@ export async function activate(context: ExtensionContext) {
 						JSHINT_ALWAYS_ALLOW_EXECUTION_KEY,
 						true,
 					);
+
 					return true;
 
 				case ConfirmationSelection.allow:
@@ -213,6 +228,7 @@ export async function activate(context: ExtensionContext) {
 						JSHINT_LIBRARY_CONFIRMATION_KEY,
 						libraryConfirmations,
 					);
+
 					return true;
 
 				case ConfirmationSelection.deny:
@@ -221,6 +237,7 @@ export async function activate(context: ExtensionContext) {
 						JSHINT_LIBRARY_CONFIRMATION_KEY,
 						libraryConfirmations,
 					);
+
 					return false;
 			}
 		}

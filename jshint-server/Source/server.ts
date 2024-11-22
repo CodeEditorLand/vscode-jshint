@@ -109,14 +109,18 @@ interface JSHINT {
 
 function locateFile(directory: string, fileName: string) {
 	let parent = directory;
+
 	do {
 		directory = parent;
+
 		let location = path.join(directory, fileName);
+
 		if (fs.existsSync(location)) {
 			return location;
 		}
 		parent = path.dirname(directory);
 	} while (parent !== directory);
+
 	return undefined;
 }
 
@@ -146,6 +150,7 @@ class OptionsResolver {
 
 	public getOptions(fsPath: string): any {
 		let result = this.optionsCache[fsPath];
+
 		if (!result) {
 			result = this.readOptions(fsPath);
 			this.optionsCache[fsPath] = result;
@@ -165,6 +170,7 @@ class OptionsResolver {
 			 */
 			var regexp: RegExp =
 				/("(?:[^\\\"]*(?:\\.)?)*")|('(?:[^\\\']*(?:\\.)?)*')|(\/\*(?:\r?\n|.)*?\*\/)|(\/{2,}.*?(?:(?:\r?\n)|$))/g;
+
 			let result = content.replace(regexp, (match, m1, m2, m3, m4) => {
 				// Only one of m1, m2, m3, m4 matches
 				if (m3) {
@@ -173,6 +179,7 @@ class OptionsResolver {
 				} else if (m4) {
 					// A line comment. If it ends in \r?\n then keep it.
 					let length = m4.length;
+
 					if (length > 2 && m4[length - 1] === "\n") {
 						return m4[length - 2] === "\r" ? "\r\n" : "\n";
 					} else {
@@ -183,6 +190,7 @@ class OptionsResolver {
 					return match;
 				}
 			});
+
 			return result;
 		}
 
@@ -198,6 +206,7 @@ class OptionsResolver {
 				that.connection.window.showErrorMessage(
 					`Can't load JSHint configuration from file ${location}. Please check the file for syntax errors.`,
 				);
+
 				return {};
 			}
 		}
@@ -208,7 +217,9 @@ class OptionsResolver {
 					? `Reading jshint configuration from ${file}, which was extended from ${extendedFrom}`
 					: `Reading jshint configuration from ${file}`,
 			);
+
 			let content = readJsonFile(file, extendedFrom);
+
 			if (content.extends) {
 				let baseFile = path.resolve(
 					path.dirname(file),
@@ -282,30 +293,37 @@ class OptionsResolver {
 			this.connection.console.info(
 				`Reading configuration from ${jshintOptions.config}`,
 			);
+
 			return readJsonFile(jshintOptions.config);
 		}
 
 		if (fsPath) {
 			let packageFile = locateFile(fsPath, "package.json");
+
 			if (packageFile) {
 				let content = readJsonFile(packageFile);
+
 				if (content.jshintConfig) {
 					this.connection.console.info(
 						`Reading configuration from ${packageFile}`,
 					);
+
 					return content.jshintConfig;
 				}
 			}
 
 			let configFile = locateFile(fsPath, JSHINTRC);
+
 			if (configFile) {
 				return readJSHintFile(configFile);
 			}
 		}
 
 		let home = getUserHome();
+
 		if (home) {
 			let file = path.join(home, JSHINTRC);
+
 			if (fs.existsSync(file)) {
 				return readJSHintFile(file);
 			}
@@ -315,6 +333,7 @@ class OptionsResolver {
 		this.connection.console.info(
 			`Reading configuration from 'jshint.options' setting`,
 		);
+
 		return jshintOptions;
 	}
 }
@@ -352,6 +371,7 @@ class FileMatcher {
 	private relativeTo(fsPath: string, folder: string): string {
 		if (folder && 0 === fsPath.indexOf(folder)) {
 			let cuttingPoint = folder.length;
+
 			if (
 				cuttingPoint < fsPath.length &&
 				"/" === fsPath.charAt(cuttingPoint)
@@ -365,6 +385,7 @@ class FileMatcher {
 
 	private folderOf(fsPath: string): string {
 		let index = fsPath.lastIndexOf("/");
+
 		return index > -1 ? fsPath.substr(0, index) : fsPath;
 	}
 
@@ -374,6 +395,7 @@ class FileMatcher {
 		root: string,
 	): boolean {
 		let relativePath = this.relativeTo(path, root);
+
 		return _.some(excludePatters, (pattern) => {
 			return minimatch(relativePath, pattern);
 		});
@@ -395,6 +417,7 @@ class FileMatcher {
 				);
 			} else {
 				let ignoreFile = locateFile(fsPath, JSHINTIGNORE);
+
 				if (ignoreFile) {
 					shouldBeExcluded = this.match(
 						processIgnoreFile(ignoreFile, [], { cache: false }),
@@ -411,6 +434,7 @@ class FileMatcher {
 			}
 
 			this.excludeCache[fsPath] = shouldBeExcluded;
+
 			return shouldBeExcluded;
 		}
 
@@ -456,6 +480,7 @@ class Linter {
 				{ options: {}, exclude: {} },
 				(<Settings>params.settings).jshint,
 			);
+
 			const { config, options, excludePath, exclude } = this.settings;
 			this.options.configure(config, options);
 			this.fileMatcher.configure(excludePath, exclude);
@@ -463,20 +488,26 @@ class Linter {
 		});
 		this.connection.onDidChangeWatchedFiles((params) => {
 			var needsValidating = false;
+
 			if (params.changes) {
 				params.changes.forEach((change) => {
 					switch (this.lastSegment(change.uri)) {
 						case JSHINTRC:
 							this.options.clear();
 							needsValidating = true;
+
 							break;
+
 						case JSHINTIGNORE:
 							this.fileMatcher.clear();
 							needsValidating = true;
+
 							break;
+
 						case "package.json":
 							this.options.clear();
 							needsValidating = true;
+
 							break;
 					}
 				});
@@ -496,6 +527,7 @@ class Linter {
 
 	private lastSegment(fsPath: string): string {
 		let index = fsPath.lastIndexOf("/");
+
 		return index > -1 ? fsPath.substr(index + 1) : fsPath;
 	}
 
@@ -522,6 +554,7 @@ class Linter {
 		this.packageManager =
 			params.initializationOptions &&
 			params.initializationOptions.packageManager;
+
 		return Promise.resolve({
 			capabilities: { textDocumentSync: this.documents.syncKind },
 		});
@@ -537,6 +570,7 @@ class Linter {
 		);
 
 		let libraryPathPromise;
+
 		if (this.nodePath) {
 			libraryPathPromise = Files.resolve(
 				"jshint",
@@ -568,25 +602,30 @@ class Linter {
 		}
 
 		let path;
+
 		try {
 			path = await libraryPathPromise;
 		} catch (e) {
 			this.connection.console.error("Failed to load jshint library");
+
 			throw new Error(
 				"Failed to load jshint library. Please install jshint in your workspace folder using 'npm install jshint' or globally using 'npm install -g jshint' and then reload.",
 			);
 		}
 
 		const confirmed = await this.confirmLibraryUsage(path, globalPath);
+
 		if (!confirmed) {
 			throw new Error("Library is not trusted");
 		}
 
 		let lib;
+
 		try {
 			lib = require(path);
 		} catch (e) {
 			this.connection.console.error("Failed to load jshint library");
+
 			throw new Error(
 				"Failed to load jshint library. Please install jshint in your workspace folder using 'npm install jshint' or globally using 'npm install -g jshint' and then reload.",
 			);
@@ -596,11 +635,13 @@ class Linter {
 			const message =
 				"The jshint library doesn't export a JSHINT property.";
 			this.connection.console.error(message);
+
 			throw new Error(message);
 		}
 
 		this.connection.console.info(`jshint library loaded from ${path}`);
 		this.lib = lib;
+
 		return this.lib;
 	}
 
@@ -609,7 +650,9 @@ class Linter {
 		globalPath: string,
 	): Thenable<boolean> {
 		this.trace("doing something");
+
 		const isGlobal = libraryPath.startsWith(globalPath);
+
 		return this.connection.sendRequest(libraryConfirmationType, {
 			isGlobal,
 			path: libraryPath,
@@ -643,15 +686,20 @@ class Linter {
 		fsPath: string,
 	): Promise<JSHintError[]> {
 		let JSHINT: JSHINT = (await this.getLib()).JSHINT;
+
 		let options = this.options.getOptions(fsPath) || {};
 		JSHINT(content, options, options.globals || {});
+
 		return JSHINT.errors;
 	}
 
 	private getEmbeddedJavascript(html: string): string {
 		let embeddedJS = [];
+
 		let index = 0;
+
 		let inscript = false;
+
 		let parser = new htmlparser.Parser({
 			onopentag: (name, attribs) => {
 				if (name === "script" && attribs.type === "text/javascript") {
@@ -694,10 +742,12 @@ class Linter {
 				uri: document.uri,
 				diagnostics: [],
 			});
+
 			return;
 		}
 
 		let fsPath = Files.uriToFilePath(document.uri);
+
 		if (!fsPath) {
 			fsPath = this.workspaceRoot;
 		}
@@ -709,7 +759,9 @@ class Linter {
 				document.languageId === "html"
 					? this.getEmbeddedJavascript(document.getText())
 					: document.getText();
+
 			let errors = await this.lintContent(content, fsPath);
+
 			if (errors) {
 				errors.forEach((error) => {
 					// For some reason the errors array contains null.
@@ -765,6 +817,7 @@ class Linter {
 
 	private getMessage(err: any, document: TextDocument): string {
 		let result: string = null;
+
 		if (typeof err.message === "string" || err.message instanceof String) {
 			result = <string>err.message;
 		} else {

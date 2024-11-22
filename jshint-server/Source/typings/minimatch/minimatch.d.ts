@@ -12,10 +12,12 @@ declare module "minimatch" {
 			pattern: string,
 			options?: IOptions,
 		): string[];
+
 		function filter(
 			pattern: string,
 			options?: IOptions,
 		): (element: string, indexed: number, array: string[]) => boolean;
+
 		function makeRe(pattern: string, options?: IOptions): RegExp;
 
 		var Minimatch: IMinimatchStatic;
@@ -24,6 +26,7 @@ declare module "minimatch" {
 			debug?: boolean;
 			nobrace?: boolean;
 			noglobstar?: boolean;
+
 			dot?: boolean;
 			noext?: boolean;
 			nocase?: boolean;

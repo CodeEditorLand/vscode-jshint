@@ -8,5 +8,6 @@ declare module "parse-gitignore" {
 		additionalPatterns?: string[],
 		options?: parsingOptions,
 	): string[];
+
 	export = parseGitIgnore;
 }
