@@ -32,6 +32,7 @@ import processIgnoreFile = require("parse-gitignore");
 
 interface LibraryUsageConfirmationParams {
 	isGlobal: boolean;
+
 	path: string;
 }
 export const libraryConfirmationType = new RequestType<
@@ -63,11 +64,17 @@ interface FileSettings {
 
 interface JSHintSettings {
 	enable: boolean;
+
 	config?: string;
+
 	options: JSHintOptions;
+
 	excludePath?: string;
+
 	exclude: FileSettings;
+
 	reportWarningsAsErrors: boolean;
+
 	lintHTML: boolean;
 }
 
@@ -78,23 +85,33 @@ interface Settings {
 
 interface JSHintError {
 	id: string;
+
 	raw: string;
+
 	code: string;
+
 	line: number;
+
 	character: number;
+
 	scope: string;
+
 	reason: string;
 }
 
 interface JSHintUnused {
 	name: string;
+
 	line: number;
+
 	character: number;
 }
 
 interface JSHintReport {
 	options: any;
+
 	errors: JSHintError[];
+
 	unused: JSHintUnused[];
 }
 
@@ -104,6 +121,7 @@ interface PackageJSHintConfig {
 
 interface JSHINT {
 	(content: string, options: any, globals: any): void;
+
 	errors: JSHintError[];
 }
 
@@ -118,6 +136,7 @@ function locateFile(directory: string, fileName: string) {
 		if (fs.existsSync(location)) {
 			return location;
 		}
+
 		parent = path.dirname(directory);
 	} while (parent !== directory);
 
@@ -127,20 +146,28 @@ function locateFile(directory: string, fileName: string) {
 const JSHINTRC = ".jshintrc";
 class OptionsResolver {
 	private connection: IConnection;
+
 	private configPath: string;
+
 	private jshintOptions: JSHintOptions;
+
 	private optionsCache: { [key: string]: any };
 
 	constructor(connection: IConnection) {
 		this.connection = connection;
+
 		this.clear();
+
 		this.configPath = null;
+
 		this.jshintOptions = null;
 	}
 
 	public configure(path: string, jshintOptions?: JSHintOptions) {
 		this.optionsCache = Object.create(null);
+
 		this.configPath = path;
+
 		this.jshintOptions = jshintOptions;
 	}
 
@@ -153,8 +180,10 @@ class OptionsResolver {
 
 		if (!result) {
 			result = this.readOptions(fsPath);
+
 			this.optionsCache[fsPath] = result;
 		}
+
 		return result;
 	}
 
@@ -203,6 +232,7 @@ class OptionsResolver {
 				let location = extendedFrom
 					? `${file} extended from ${extendedFrom}`
 					: file;
+
 				that.connection.window.showErrorMessage(
 					`Can't load JSHint configuration from file ${location}. Please check the file for syntax errors.`,
 				);
@@ -256,6 +286,7 @@ class OptionsResolver {
 								content.globals || {},
 								optionsToOverride.globals,
 							);
+
 							delete optionsToOverride.globals;
 						}
 
@@ -341,12 +372,16 @@ class OptionsResolver {
 const JSHINTIGNORE = ".jshintignore";
 class FileMatcher {
 	private configPath: string;
+
 	private defaultExcludePatterns: string[];
+
 	private excludeCache: { [key: string]: any };
 
 	constructor() {
 		this.configPath = null;
+
 		this.defaultExcludePatterns = null;
+
 		this.excludeCache = {};
 	}
 
@@ -360,7 +395,9 @@ class FileMatcher {
 
 	public configure(path: string, exclude?: FileSettings): void {
 		this.configPath = path;
+
 		this.excludeCache = {};
+
 		this.defaultExcludePatterns = this.pickTrueKeys(exclude);
 	}
 
@@ -378,8 +415,10 @@ class FileMatcher {
 			) {
 				cuttingPoint += 1;
 			}
+
 			return fsPath.substr(cuttingPoint);
 		}
+
 		return fsPath;
 	}
 
@@ -444,15 +483,21 @@ class FileMatcher {
 
 class Linter {
 	private connection: IConnection;
+
 	private options: OptionsResolver;
+
 	private fileMatcher: FileMatcher;
+
 	private documents: TextDocuments;
+
 	private settings: JSHintSettings;
 
 	private workspaceRoot: string;
+
 	private lib: any;
 
 	private nodePath: string;
+
 	private packageManager: string;
 
 	constructor() {
@@ -460,21 +505,28 @@ class Linter {
 			new IPCMessageReader(process),
 			new IPCMessageWriter(process),
 		);
+
 		this.options = new OptionsResolver(this.connection);
+
 		this.fileMatcher = new FileMatcher();
+
 		this.documents = new TextDocuments();
+
 		this.documents.onDidChangeContent((event) =>
 			this.validateSingle(event.document),
 		);
+
 		this.documents.onDidClose((event) => {
 			this.connection.sendDiagnostics({
 				uri: event.document.uri,
 				diagnostics: [],
 			});
 		});
+
 		this.documents.listen(this.connection);
 
 		this.connection.onInitialize((params) => this.onInitialize(params));
+
 		this.connection.onDidChangeConfiguration((params) => {
 			this.settings = _.assign<Object, JSHintSettings>(
 				{ options: {}, exclude: {} },
@@ -482,10 +534,14 @@ class Linter {
 			);
 
 			const { config, options, excludePath, exclude } = this.settings;
+
 			this.options.configure(config, options);
+
 			this.fileMatcher.configure(excludePath, exclude);
+
 			this.validateAll();
 		});
+
 		this.connection.onDidChangeWatchedFiles((params) => {
 			var needsValidating = false;
 
@@ -494,28 +550,33 @@ class Linter {
 					switch (this.lastSegment(change.uri)) {
 						case JSHINTRC:
 							this.options.clear();
+
 							needsValidating = true;
 
 							break;
 
 						case JSHINTIGNORE:
 							this.fileMatcher.clear();
+
 							needsValidating = true;
 
 							break;
 
 						case "package.json":
 							this.options.clear();
+
 							needsValidating = true;
 
 							break;
 					}
 				});
 			}
+
 			if (needsValidating) {
 				this.validateAll();
 			}
 		});
+
 		this.connection.onRequest("jshint/resetLibrary", () => {
 			this.lib = undefined;
 		});
@@ -551,6 +612,7 @@ class Linter {
 		this.nodePath =
 			params.initializationOptions &&
 			params.initializationOptions.nodePath;
+
 		this.packageManager =
 			params.initializationOptions &&
 			params.initializationOptions.packageManager;
@@ -634,12 +696,14 @@ class Linter {
 		if (!lib.JSHINT) {
 			const message =
 				"The jshint library doesn't export a JSHINT property.";
+
 			this.connection.console.error(message);
 
 			throw new Error(message);
 		}
 
 		this.connection.console.info(`jshint library loaded from ${path}`);
+
 		this.lib = lib;
 
 		return this.lib;
@@ -661,6 +725,7 @@ class Linter {
 
 	private validateAll(): void {
 		let tracker = new ErrorMessageTracker();
+
 		this.documents.all().forEach((document) => {
 			try {
 				this.validate(document);
@@ -668,6 +733,7 @@ class Linter {
 				tracker.add(this.getMessage(err, document));
 			}
 		});
+
 		tracker.sendErrors(this.connection);
 	}
 
@@ -688,6 +754,7 @@ class Linter {
 		let JSHINT: JSHINT = (await this.getLib()).JSHINT;
 
 		let options = this.options.getOptions(fsPath) || {};
+
 		JSHINT(content, options, options.globals || {});
 
 		return JSHINT.errors;
@@ -708,6 +775,7 @@ class Linter {
 						embeddedJS,
 						html.slice(index, parser.endIndex).match(/\n\r|\n|\r/g),
 					);
+
 					inscript = true;
 				}
 			},
@@ -725,11 +793,13 @@ class Linter {
 				}
 
 				index = parser.startIndex;
+
 				inscript = false;
 			},
 		});
 
 		parser.write(html);
+
 		parser.end();
 
 		return embeddedJS.join("");
@@ -771,6 +841,7 @@ class Linter {
 				});
 			}
 		}
+
 		this.connection.sendDiagnostics({ uri: document.uri, diagnostics });
 	}
 
@@ -780,9 +851,11 @@ class Linter {
 		if (problem.line <= 0) {
 			problem.line = 1;
 		}
+
 		if (problem.character <= 0) {
 			problem.character = 1;
 		}
+
 		return {
 			message:
 				problem.reason + (problem.code ? ` (${problem.code})` : ""),
@@ -812,6 +885,7 @@ class Linter {
 		) {
 			return DiagnosticSeverity.Error;
 		}
+
 		return DiagnosticSeverity.Warning;
 	}
 
@@ -823,6 +897,7 @@ class Linter {
 		} else {
 			result = `An unknown error occured while validating file: ${Files.uriToFilePath(document.uri)}`;
 		}
+
 		return result;
 	}
 }

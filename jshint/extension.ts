@@ -24,6 +24,7 @@ import {
 
 interface LibraryUsageConfirmationParams {
 	isGlobal: boolean;
+
 	path: string;
 }
 export const libraryConfirmationType = new RequestType<
@@ -99,6 +100,7 @@ export async function activate(context: ExtensionContext) {
 			interface JSHintQuickPickItem extends QuickPickItem {
 				kind: "all" | "session";
 			}
+
 			const items: JSHintQuickPickItem[] = [
 				{
 					label: "Reset JSHint library decisions for this workspace",
@@ -124,6 +126,7 @@ export async function activate(context: ExtensionContext) {
 			} else if (selected.kind === "session") {
 				if (sessionPath) {
 					delete libraryConfirmations[sessionPath];
+
 					await context.globalState.update(
 						JSHINT_LIBRARY_CONFIRMATION_KEY,
 						libraryConfirmations,
@@ -135,12 +138,15 @@ export async function activate(context: ExtensionContext) {
 				JSHINT_ALWAYS_ALLOW_EXECUTION_KEY,
 				false,
 			);
+
 			alwaysAllowExecution = false;
+
 			client.sendRequest("jshint/resetLibrary");
 		}),
 	);
 
 	let client = new LanguageClient("jshint", serverOptions, clientOptions);
+
 	context.subscriptions.push(
 		new SettingMonitor(client, "jshint.enable").start(),
 		commands.registerCommand("jshint.showOutputChannel", () =>
@@ -160,6 +166,7 @@ export async function activate(context: ExtensionContext) {
 	let sessionPath: string | undefined;
 
 	await client.onReady();
+
 	client.onRequest(libraryConfirmationType, async (params) => {
 		if (alwaysAllowExecution) {
 			return true;
@@ -192,6 +199,7 @@ export async function activate(context: ExtensionContext) {
 					relativePath.length - mainPath.length,
 				);
 			}
+
 			message = `The jshint extension will use '${relativePath}' for validation, which is installed locally in '${folder.name}'. Do you allow the execution of this JSHint version including all plugins and configuration files it will load on your behalf?\n\nPress 'Allow Everywhere' to remember the choice for all workspaces. Use 'Cancel' to disable JSHint for this session.`;
 		} else {
 			message = params.isGlobal
@@ -224,6 +232,7 @@ export async function activate(context: ExtensionContext) {
 
 				case ConfirmationSelection.allow:
 					libraryConfirmations[params.path] = true;
+
 					context.globalState.update(
 						JSHINT_LIBRARY_CONFIRMATION_KEY,
 						libraryConfirmations,
@@ -233,6 +242,7 @@ export async function activate(context: ExtensionContext) {
 
 				case ConfirmationSelection.deny:
 					libraryConfirmations[params.path] = false;
+
 					context.globalState.update(
 						JSHINT_LIBRARY_CONFIRMATION_KEY,
 						libraryConfirmations,

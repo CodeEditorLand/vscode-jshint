@@ -24,36 +24,51 @@ declare module "minimatch" {
 
 		interface IOptions {
 			debug?: boolean;
+
 			nobrace?: boolean;
+
 			noglobstar?: boolean;
 
 			dot?: boolean;
+
 			noext?: boolean;
+
 			nocase?: boolean;
+
 			nonull?: boolean;
+
 			matchBase?: boolean;
+
 			nocomment?: boolean;
+
 			nonegate?: boolean;
+
 			flipNegate?: boolean;
 		}
 
 		interface IMinimatchStatic {
 			new (pattern: string, options?: IOptions): IMinimatch;
+
 			prototype: IMinimatch;
 		}
 
 		interface IMinimatch {
 			pattern: string;
+
 			options: IOptions;
 			/** 2-dimensional array of regexp or string expressions. */
 			set: any[][]; // (RegExp | string)[][]
 			regexp: RegExp;
+
 			negate: boolean;
+
 			comment: boolean;
+
 			empty: boolean;
 
 			makeRe(): RegExp; // regexp or boolean
 			match(fname: string): boolean;
+
 			matchOne(
 				files: string[],
 				pattern: string[],
