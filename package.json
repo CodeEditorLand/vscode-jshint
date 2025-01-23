@@ -524,7 +524,7 @@
 	],
 	"dependencies": {},
 	"devDependencies": {
-		"@types/node": "22.10.7"
+		"@types/node": "22.10.9"
 	},
 	"icon": "jshint_icon.png",
 	"galleryBanner": {
