@@ -9,6 +9,6 @@
 		"parse-gitignore": "2.0.0"
 	},
 	"devDependencies": {
-		"@types/lodash": "4.17.15"
+		"@types/lodash": "4.17.16"
 	}
 }
